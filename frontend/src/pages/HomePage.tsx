@@ -13,13 +13,11 @@ export default function HomePage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center py-12 px-4">
       <div className="max-w-md w-full">
-        {/* 헤더 */}
         <div className="text-center mb-10">
           <h1 className="text-5xl font-bold text-toss-blue mb-3">LinkPay</h1>
           <p className="text-toss-gray text-lg">간편 결제 링크 서비스</p>
         </div>
 
-        {/* UUID로 결제 페이지 이동 */}
         <div className="bg-white rounded-2xl shadow-lg p-8">
           <h2 className="text-xl font-semibold text-gray-800 mb-6 text-center">결제하기</h2>
           <form onSubmit={handleSearch} className="space-y-4">
@@ -45,7 +43,6 @@ export default function HomePage() {
           </form>
         </div>
 
-        {/* 관리자 링크 */}
         <div className="mt-8 text-center">
           <a
             href="/admin/login"
