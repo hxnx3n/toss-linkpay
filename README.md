@@ -1,96 +1,83 @@
-# LinkPay - 간편 결제 링크 서비스
+# LinkPay
 
-결제 UUID를 생성하고, 해당 UUID로 결제를 진행할 수 있는 간편 결제 링크 서비스입니다.
+토스페이먼츠 API를 활용한 간편 결제 링크 서비스
 
 ## 기술 스택
 
-- **Frontend**: React + Vite + TailwindCSS
-- **Backend**: NestJS + TypeORM
-- **Database**: PostgreSQL
+- **Frontend**: React 18 + Vite 5 + TailwindCSS 3.4
+- **Backend**: NestJS 10 + TypeORM
+- **Database**: PostgreSQL 15
+- **Payment**: TossPayments SDK
 - **Container**: Docker & Docker Compose
 
 ## 시작하기
 
-### Docker로 실행 (권장)
+### Docker로 실행
 
 ```bash
-# 프로젝트 루트에서 실행
 docker-compose up --build
 ```
 
-서비스가 시작되면:
-- Frontend: http://localhost (nginx)
+서비스 접속:
+- Frontend: http://localhost
 - Backend API: http://localhost:3000
-- PostgreSQL: localhost:5432
 
-### 로컬 개발 환경
-
-#### Backend
+### 로컬 개발
 
 ```bash
+# Backend
 cd backend
 pnpm install
 pnpm run start:dev
-```
 
-#### Frontend
-
-```bash
+# Frontend
 cd frontend
 pnpm install
 pnpm run dev
 ```
 
-## API 엔드포인트
+## 주요 기능
 
 ### 결제 링크 생성
-```
-POST /api/payments
-{
-  "title": "결제 제목",
-  "amount": 10000,
-  "description": "설명 (선택)"
-}
-```
+- 다중 품목 지원
+- 자동 금액 계산
 
-### 결제 정보 조회
-```
-GET /api/payments/:uuid
-```
+### 결제 수단
+- 카드 결제
+- 계좌이체
+- 가상계좌
 
-### 결제 처리
-```
-POST /api/payments/:uuid/process
-{
-  "payerName": "홍길동",
-  "payerEmail": "test@example.com",
-  "cardNumber": "1234567890123456",
-  "expiryDate": "1225",
-  "cvv": "123"
-}
-```
+### 관리자 기능
+- 결제 내역 조회/검색/필터/정렬
+- 결제 취소 및 환불
+- 통계 대시보드
 
-### 결제 취소
+## API
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | /api/payments | 결제 링크 생성 |
+| GET | /api/payments/:uuid | 결제 정보 조회 |
+| POST | /api/payments/:uuid/confirm | 결제 승인 |
+| POST | /api/payments/:uuid/cancel | 결제 취소 |
+| POST | /api/payments/:uuid/refund | 환불 |
+| DELETE | /api/payments/:uuid | 삭제 |
+| POST | /api/payments/delete-all | 전체 삭제 |
+| POST | /api/auth/login | 관리자 로그인 |
+
+## 환경 변수
+
+```env
+DATABASE_HOST=postgres
+DATABASE_PORT=5432
+DATABASE_USER=linkpay
+DATABASE_PASSWORD=linkpay123
+DATABASE_NAME=linkpay
+ADMIN_PASSWORD=admin1234
+JWT_SECRET=your-secret-key
+TOSS_CLIENT_KEY=test_ck_xxx
+TOSS_SECRET_KEY=test_sk_xxx
 ```
-POST /api/payments/:uuid/cancel
-```
-
-### 모든 결제 목록 조회
-```
-GET /api/payments
-```
-
-## 사용 방법
-
-1. 홈페이지에서 결제 제목, 금액, 설명을 입력하여 결제 링크 생성
-2. 생성된 UUID를 복사하거나 결제 페이지로 이동
-3. 결제 페이지에서 결제 정보 입력 후 결제 진행
-4. 결제 결과 확인
-
-## 테스트
-
-- 카드번호가 `0000`으로 시작하면 결제 실패 처리됩니다.
-- 그 외의 카드번호는 결제 성공 처리됩니다.
 
 ## 프로젝트 구조
 
@@ -98,32 +85,19 @@ GET /api/payments
 toss-linkpay/
 ├── docker-compose.yml
 ├── backend/
-│   ├── Dockerfile
-│   ├── package.json
-│   ├── tsconfig.json
 │   └── src/
-│       ├── main.ts
-│       ├── app.module.ts
+│       ├── auth/
 │       └── payment/
-│           ├── payment.module.ts
-│           ├── payment.controller.ts
-│           ├── payment.service.ts
-│           ├── entities/
-│           │   └── payment.entity.ts
-│           └── dto/
-│               ├── create-payment.dto.ts
-│               └── process-payment.dto.ts
 └── frontend/
-    ├── Dockerfile
-    ├── package.json
-    ├── vite.config.ts
-    ├── tailwind.config.js
     └── src/
-        ├── main.tsx
-        ├── App.tsx
-        ├── index.css
         └── pages/
             ├── HomePage.tsx
             ├── PaymentPage.tsx
-            └── PaymentResultPage.tsx
+            ├── PaymentResultPage.tsx
+            ├── AdminPage.tsx
+            └── AdminLoginPage.tsx
 ```
+
+## 라이선스
+
+MIT
