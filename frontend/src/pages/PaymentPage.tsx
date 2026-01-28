@@ -162,9 +162,7 @@ export default function PaymentPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100">
       <main className="max-w-lg mx-auto px-4 py-8">
-        {/* 결제 정보 카드 */}
         <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden mb-4">
-          {/* 결제 제목 및 금액 */}
           <div className="px-5 py-5 border-b border-gray-100">
             <h2 className="text-xl font-bold text-gray-900 mb-2">{payment?.title}</h2>
             <p className="text-3xl font-black text-toss-blue">
@@ -176,7 +174,6 @@ export default function PaymentPage() {
             )}
           </div>
 
-          {/* 품목 목록 */}
           {payment?.items && payment.items.length > 0 && (
             <div className="px-5 py-4">
               <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">주문 내역</p>
@@ -196,7 +193,6 @@ export default function PaymentPage() {
                 ))}
               </div>
 
-              {/* 합계 */}
               <div className="mt-4 pt-4 border-t border-gray-100 flex justify-between items-center">
                 <span className="text-sm font-semibold text-gray-600">합계</span>
                 <span className="text-lg font-bold text-toss-blue">
@@ -207,7 +203,6 @@ export default function PaymentPage() {
           )}
         </div>
 
-        {/* 결제 수단 선택 */}
         <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden mb-4">
           <div className="px-5 py-4">
             <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">결제 수단</p>
@@ -300,7 +295,6 @@ export default function PaymentPage() {
           </div>
         </div>
 
-        {/* 결제 버튼 */}
         <button
           onClick={handlePayment}
           disabled={!ready || processing}
@@ -318,7 +312,6 @@ export default function PaymentPage() {
           )}
         </button>
 
-        {/* 안내 문구 */}
         <div className="mt-6 text-center">
           <p className="text-xs text-gray-400">
             토스페이먼츠를 통해 안전하게 결제됩니다

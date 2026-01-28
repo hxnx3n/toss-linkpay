@@ -238,7 +238,6 @@ export default function AdminPage() {
   const handleCreatePayment = async (e: React.FormEvent) => {
     e.preventDefault()
 
-    // 유효한 품목만 필터링
     const validItems = items.filter(item => item.name && item.price > 0)
     if (validItems.length === 0) {
       showAlert('최소 1개의 품목을 입력해주세요.')
@@ -480,7 +479,6 @@ export default function AdminPage() {
 
   return (
     <div className="min-h-screen bg-gray-100">
-      {/* Header */}
       <header className="bg-white shadow-sm">
         <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
           <h1 className="text-xl font-bold text-gray-800">LinkPay Admin</h1>
@@ -494,7 +492,6 @@ export default function AdminPage() {
       </header>
 
       <main className="max-w-7xl mx-auto px-4 py-8">
-        {/* 통계 - 상단 */}
         <div className="bg-white rounded-xl shadow-sm p-6 mb-8">
           <h2 className="text-lg font-semibold text-gray-800 mb-4">통계</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -524,7 +521,6 @@ export default function AdminPage() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* 결제 링크 생성 */}
           <div className="lg:col-span-1">
             <div className="bg-white rounded-xl shadow-sm p-6">
               <h2 className="text-lg font-semibold text-gray-800 mb-4">새 결제 링크 생성</h2>
@@ -543,7 +539,6 @@ export default function AdminPage() {
                   />
                 </div>
 
-                {/* 품목 목록 */}
                 <div>
                   <div className="flex justify-between items-center mb-2">
                     <label className="block text-sm font-medium text-gray-600">
@@ -597,7 +592,6 @@ export default function AdminPage() {
                   <p className="text-xs text-gray-400 mt-1">품목명 / 가격 / 수량</p>
                 </div>
 
-                {/* 총 금액 표시 */}
                 <div className="bg-gray-50 rounded-lg p-3">
                   <div className="flex justify-between items-center">
                     <span className="text-sm text-gray-600">총 결제금액</span>
@@ -627,7 +621,6 @@ export default function AdminPage() {
                 </button>
               </form>
 
-              {/* 생성된 링크 */}
               {createdLink && (
                 <div className="mt-4 p-4 bg-green-50 rounded-lg">
                   <p className="text-sm font-medium text-green-800 mb-2">✅ 생성 완료!</p>
@@ -650,7 +643,6 @@ export default function AdminPage() {
             </div>
           </div>
 
-          {/* 결제 목록 */}
           <div className="lg:col-span-2">
             <div className="bg-white rounded-xl shadow-sm overflow-hidden">
               <div className="px-6 py-4 border-b border-gray-100">
@@ -672,9 +664,7 @@ export default function AdminPage() {
                     </div>
                   </div>
 
-                  {/* 검색 및 필터 */}
                   <div className="flex flex-col sm:flex-row gap-3">
-                    {/* 검색 */}
                     <div className="relative flex-1">
                       <input
                         type="text"
@@ -693,7 +683,6 @@ export default function AdminPage() {
                       </svg>
                     </div>
 
-                    {/* 상태 필터 */}
                     <select
                       value={statusFilter}
                       onChange={(e) => setStatusFilter(e.target.value)}
@@ -706,7 +695,6 @@ export default function AdminPage() {
                       <option value="CANCELLED">취소</option>
                     </select>
 
-                    {/* 정렬 */}
                     <select
                       value={`${sortBy}-${sortOrder}`}
                       onChange={(e) => {
@@ -808,7 +796,6 @@ export default function AdminPage() {
         </div>
       </main>
 
-      {/* 확인 모달 */}
       <ConfirmModal
         isOpen={confirmModal.isOpen}
         title={confirmModal.title}
@@ -819,7 +806,6 @@ export default function AdminPage() {
         onCancel={closeConfirmModal}
       />
 
-      {/* 알림 모달 */}
       <AlertModal
         isOpen={alertModal.isOpen}
         title={alertModal.title}
