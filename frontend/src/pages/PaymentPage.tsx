@@ -61,15 +61,12 @@ export default function PaymentPage() {
 
   const initTossPayments = async () => {
     try {
-      // 클라이언트 키 조회
       const keyResponse = await fetch('/api/payments/client-key')
       const keyData = await keyResponse.json()
       const clientKey = keyData.data.clientKey
 
-      // 토스페이먼츠 SDK 초기화 (API 개별 연동 방식)
       const tossPayments = await loadTossPayments(clientKey)
 
-      // 결제 객체 생성
       const paymentInstance = tossPayments.payment({
         customerKey: `customer_${uuid}`,
       })
@@ -88,7 +85,6 @@ export default function PaymentPage() {
     setProcessing(true)
 
     try {
-      // 결제 요청 옵션 기본 설정
       const requestOptions: any = {
         method: selectedMethod,
         amount: {
@@ -101,7 +97,6 @@ export default function PaymentPage() {
         failUrl: `${window.location.origin}/pay/${uuid}/fail`,
       }
 
-      // 결제 수단별 추가 옵션
       if (selectedMethod === 'CARD') {
         requestOptions.card = {
           useEscrow: false,
@@ -122,7 +117,6 @@ export default function PaymentPage() {
 
       await tossPayment.requestPayment(requestOptions)
     } catch (err: any) {
-      // 사용자가 결제를 취소한 경우
       if (err.code === 'USER_CANCEL') {
         alert('결제가 취소되었습니다.')
       } else {
