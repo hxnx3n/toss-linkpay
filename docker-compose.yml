@@ -1,0 +1,62 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: linkpay-db
+    environment:
+      POSTGRES_USER: linkpay
+      POSTGRES_PASSWORD: linkpay123
+      POSTGRES_DB: linkpay
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - linkpay-network
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: linkpay-backend
+    environment:
+      DATABASE_HOST: postgres
+      DATABASE_PORT: 5432
+      DATABASE_USER: linkpay
+      DATABASE_PASSWORD: linkpay123
+      DATABASE_NAME: linkpay
+      NODE_ENV: development
+      ADMIN_PASSWORD: admin1234
+      JWT_SECRET: linkpay-jwt-secret-key-change-in-production
+      JWT_EXPIRES_IN: 24h
+      TOSS_CLIENT_KEY: test_ck_D5GePWvyJnrK0W0k6q8gLzN97Eoq
+      TOSS_SECRET_KEY: test_sk_zXLkKEypNArWmo50nX3lmeaxYG5R
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres
+    networks:
+      - linkpay-network
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: linkpay-frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - linkpay-network
+
+volumes:
+  postgres_data:
+
+networks:
+  linkpay-network:
+    driver: bridge
