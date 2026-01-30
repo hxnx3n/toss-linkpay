@@ -23,7 +23,7 @@ services:
       dockerfile: Dockerfile
     container_name: linkpay-backend
     env_file:
-      - ./backend/.env
+      - .env
     environment:
       DATABASE_HOST: ${DATABASE_HOST:-postgres}
       DATABASE_PORT: ${DATABASE_PORT:-5432}
