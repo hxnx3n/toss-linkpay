@@ -737,7 +737,7 @@ export default function AdminPage() {
                         <tr key={payment.id} className="hover:bg-gray-50">
                           <td className="px-4 py-3">
                             <div className="text-sm font-medium text-gray-800">{payment.title}</div>
-                            <div className="text-xs text-gray-400 font-mono truncate max-w-[120px]">
+                            <div className="text-xs text-gray-400 font-mono break-all">
                               {payment.id}
                             </div>
                           </td>
